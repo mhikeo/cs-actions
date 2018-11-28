@@ -21,6 +21,25 @@ import static io.cloudslang.content.utils.OutputUtilities.getFailureResultsMap;
 
 public class UpdatePostgresConfigAction {
 
+    /**
+     * Updates the Postgres config postgresql.conf
+     *
+     * @param installationPath     The full path to the PostgreSQL configuration file in the local machine to be updated
+     * @param port                 The port the PostgreSQL database should listen.
+     * @param ssl                  Enable SSL connections.
+     * @param sslCaFile            Name of the file containing the SSL server certificate authority (CA).
+     * @param sslCertFile          Name of the file containing the SSL server certificate.
+     * @param sslKeyFile           Name of the file containing the SSL server private key.
+     * @param maxConnections       The maximum number of client connections allowed.
+     * @param sharedBuffers        Determines how much memory is dedicated to PostgreSQL to use for caching data.
+     * @param effectiveCacheSize   Effective cache size.
+     * @param autovacuum           Enable/disable autovacuum. The autovacuum process takes care of several maintenance
+     *                             chores inside your database that you really need.
+     * @param workMem              Memory used for sorting and queries.
+     *
+     * @return A map with strings as keys and strings as values that contains: outcome of the action (or failure message
+     * and the exception if there is one), returnCode of the operation and the ID of the request
+     */
     @Action(name = "Update Property Value",
             outputs = {
                     @Output(RETURN_CODE),

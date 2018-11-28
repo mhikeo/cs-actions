@@ -1,5 +1,9 @@
 package io.cloudslang.content.postgres.utils;
 
+/**
+ * This class is for constants.
+ *
+ */
 public class Constants {
 
     public static final String FILE_PATH = "file_path";

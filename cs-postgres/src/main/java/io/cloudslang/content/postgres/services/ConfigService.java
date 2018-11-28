@@ -12,6 +12,22 @@ import static io.cloudslang.content.postgres.utils.Constants.WORK_MEM;
 @SuppressWarnings("ALL")
 public class ConfigService {
 
+    /**
+     * Method to validate inputs and consolidate to a map.
+     *
+     * @param port                 The port the PostgreSQL database should listen.
+     * @param ssl                  Enable SSL connections.
+     * @param sslCaFile            Name of the file containing the SSL server certificate authority (CA).
+     * @param sslCertFile          Name of the file containing the SSL server certificate.
+     * @param sslKeyFile           Name of the file containing the SSL server private key.
+     * @param maxConnections       The maximum number of client connections allowed.
+     * @param sharedBuffers        Determines how much memory is dedicated to PostgreSQL to use for caching data.
+     * @param effectiveCacheSize   Effective cache size.
+     * @param autovacuum           Enable/disable autovacuum. The autovacuum process takes care of several maintenance
+     *                             chores inside your database that you really need.
+     * @param workMem              Memory used for sorting and queries.
+     *
+     */
     public static Map<String, Object> validateAndBuildKeyValuesMap(String port, String ssl, String sslCaFile, String sslCertFile,
                                                                    String sslKeyFile, String maxConnections, String sharedBuffers,
                                                                    String effectiveCacheSize, String autovacuum, String workMem) {
@@ -60,6 +76,13 @@ public class ConfigService {
         return keyValues;
     }
 
+    /**
+     * Method to modify the Postgres config postgresql.conf based on key-value pairs
+     *
+     * @param filename             The filename of the config to be updated.
+     * @param keyValuePairs        A map of key-value pairs.
+     *
+     */
     public static void changeProperty(String filename, Map<String, Object> keyValuePairs) throws IOException {
         if(keyValuePairs.size() == 0) {
             return;
@@ -107,6 +130,15 @@ public class ConfigService {
         tmpFile.renameTo(file);
     }
 
+    /**
+     * Method to modify the Postgres config pg_hba.config
+     *
+     * @param filename             The filename of the config to be updated.
+     * @param allowedHosts         A wildcard or a comma-separated list of hostnames or IPs (IPv4 or IPv6).
+     * @param allowedUsers         A comma-separated list of PostgreSQL users. If no value is specified for this input,
+     *                             all users will have access to the server.
+     *
+     */
     public static void changeProperty(String filename, String[] allowedHosts, String[] allowedUsers) throws IOException {
 
         if ((allowedHosts == null || allowedHosts.length == 0) && (allowedUsers == null || allowedUsers.length == 0)) {

@@ -23,6 +23,17 @@ import static io.cloudslang.content.utils.OutputUtilities.getFailureResultsMap;
 
 public class UpdatePgHbaConfigAction {
 
+    /**
+     * Updates the Postgres config pg_hba.config
+     *
+     * @param installationPath     The full path to the PostgreSQL configuration file in the local machine to be updated.
+     * @param allowedHosts         A wildcard or a comma-separated list of hostnames or IPs (IPv4 or IPv6).
+     * @param allowedUsers         A comma-separated list of PostgreSQL users. If no value is specified for this input,
+     *                             all users will have access to the server.
+     *
+     * @return A map with strings as keys and strings as values that contains: outcome of the action (or failure message
+     * and the exception if there is one), returnCode of the operation and the ID of the request
+     */
     @Action(name = "Update pg_hba.config",
             outputs = {
                     @Output(RETURN_CODE),
