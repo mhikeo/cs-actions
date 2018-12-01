@@ -25,6 +25,7 @@ public class UpdatePostgresConfigAction {
      * Updates the Postgres config postgresql.conf
      *
      * @param installationPath     The full path to the PostgreSQL configuration file in the local machine to be updated
+     * @param listenAddresses     The list of addresses where the PostgreSQL database listens
      * @param port                 The port the PostgreSQL database should listen.
      * @param ssl                  Enable SSL connections.
      * @param sslCaFile            Name of the file containing the SSL server certificate authority (CA).
@@ -56,6 +57,7 @@ public class UpdatePostgresConfigAction {
             })
     public Map<String, String> execute(
             @Param(value = FILE_PATH, required = true) String installationPath,
+            @Param(value = LISTEN_ADDRESSES, required = true) String listenAddresses,
             @Param(value = PORT) String port,
             @Param(value = SSL) String ssl,
             @Param(value = SSL_CA_FILE) String sslCaFile,
@@ -70,7 +72,7 @@ public class UpdatePostgresConfigAction {
 
         try {
             Map<String, Object> keyValues = ConfigService.validateAndBuildKeyValuesMap(
-                    port, ssl, sslCaFile, sslCertFile, sslKeyFile, maxConnections, sharedBuffers, effectiveCacheSize, autovacuum, workMem);
+                    listenAddresses, port, ssl, sslCaFile, sslCertFile, sslKeyFile, maxConnections, sharedBuffers, effectiveCacheSize, autovacuum, workMem);
 
             ConfigService.changeProperty(installationPath, keyValues);
 

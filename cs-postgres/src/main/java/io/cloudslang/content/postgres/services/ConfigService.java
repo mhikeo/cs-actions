@@ -14,7 +14,7 @@ public class ConfigService {
 
     /**
      * Method to validate inputs and consolidate to a map.
-     *
+     * @param listenAddresses     The list of addresses where the PostgreSQL database listens
      * @param port                 The port the PostgreSQL database should listen.
      * @param ssl                  Enable SSL connections.
      * @param sslCaFile            Name of the file containing the SSL server certificate authority (CA).
@@ -28,11 +28,15 @@ public class ConfigService {
      * @param workMem              Memory used for sorting and queries.
      *
      */
-    public static Map<String, Object> validateAndBuildKeyValuesMap(String port, String ssl, String sslCaFile, String sslCertFile,
+    public static Map<String, Object> validateAndBuildKeyValuesMap(String listenAddresses, String port, String ssl, String sslCaFile, String sslCertFile,
                                                                    String sslKeyFile, String maxConnections, String sharedBuffers,
                                                                    String effectiveCacheSize, String autovacuum, String workMem) {
 
         Map<String, Object> keyValues = new HashMap<>();
+        if(listenAddresses != null && listenAddresses.length() > 0) {
+            keyValues.put(LISTEN_ADDRESSES, listenAddresses);
+        }
+
         if(StringUtils.isNumeric(port)) {
             keyValues.put(PORT, Integer.parseInt(port));
         }

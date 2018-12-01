@@ -7,6 +7,7 @@ package io.cloudslang.content.postgres.utils;
 public class Constants {
 
     public static final String FILE_PATH = "file_path";
+    public static final String LISTEN_ADDRESSES ="listen_addresses";
     public static final String PORT = "port";
     public static final String SSL = "ssl";
     public static final String SSL_CA_FILE = "ssl_ca_file";
