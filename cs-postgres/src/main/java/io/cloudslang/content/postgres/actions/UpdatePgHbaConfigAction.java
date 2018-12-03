@@ -55,8 +55,12 @@ public class UpdatePgHbaConfigAction {
     ) {
 
         try {
+            if (allowedHosts == null && allowedUsers == null) {
+                return getSuccessResultsMap("No changes in pg_hba.conf");
+            }
+
             if (allowedHosts == null || allowedHosts.trim().length() == 0) {
-                return getFailureResultsMap("No changes in pg_hba.conf");
+                allowedHosts = "localhost";
             }
             allowedHosts =  allowedHosts.replace("\'", "").trim();
 
