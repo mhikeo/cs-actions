@@ -93,7 +93,7 @@ public class ConfigService {
         }
 
         final File file = new File(filename);
-        final File tmpFile = new File(file + ".tmp");
+        final File tmpFile = new File(file.getAbsolutePath() + ".tmp");
 
         PrintWriter pw = new PrintWriter(tmpFile);
         BufferedReader br = new BufferedReader(new FileReader(file));
