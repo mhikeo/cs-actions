@@ -1,5 +1,7 @@
 package io.cloudslang.content.postgres.actions;
 
+import java.io.File;
+import java.nio.file.Paths;
 import java.util.Map;
 
 import com.hp.oo.sdk.content.annotations.Action;
@@ -20,6 +22,8 @@ import static io.cloudslang.content.utils.OutputUtilities.getFailureResultsMap;
 
 
 public class UpdatePostgresConfigAction {
+
+    private static final String POSTGRES_CONF = "postgresql.conf";
 
     /**
      * Updates the Postgres config postgresql.conf
@@ -74,7 +78,8 @@ public class UpdatePostgresConfigAction {
             Map<String, Object> keyValues = ConfigService.validateAndBuildKeyValuesMap(
                     listenAddresses, port, ssl, sslCaFile, sslCertFile, sslKeyFile, maxConnections, sharedBuffers, effectiveCacheSize, autovacuum, workMem);
 
-            ConfigService.changeProperty(installationPath, keyValues);
+            File installationDir = new File(installationPath.replace("\"",""));
+            ConfigService.changeProperty((new File(installationDir.getAbsolutePath(), POSTGRES_CONF)).getAbsolutePath(), keyValues);
 
             return getSuccessResultsMap("Updated postgresql.conf successfully");
         } catch (Exception e) {

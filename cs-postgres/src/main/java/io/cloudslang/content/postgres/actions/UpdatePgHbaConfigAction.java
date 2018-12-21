@@ -1,5 +1,8 @@
 package io.cloudslang.content.postgres.actions;
 
+import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,6 +25,7 @@ import static io.cloudslang.content.utils.OutputUtilities.getFailureResultsMap;
 
 
 public class UpdatePgHbaConfigAction {
+    private static final String PG_HBA_CONF = "pg_hba.conf";
 
     /**
      * Updates the Postgres config pg_hba.config
@@ -69,8 +73,8 @@ public class UpdatePgHbaConfigAction {
             } else {
                 allowedUsers = allowedUsers.replace("\'", "").trim();
             }
-
-            ConfigService.changeProperty(installationPath, allowedHosts.split(";"), allowedUsers.split(";"));
+            File installationDir = new File(installationPath.replace("\"",""));
+            ConfigService.changeProperty((new File(installationDir.getAbsolutePath(), PG_HBA_CONF)).getAbsolutePath(), allowedHosts.split(";"), allowedUsers.split(";"));
 
             return getSuccessResultsMap("Updated pg_hba.conf successfully");
         } catch (Exception e) {
